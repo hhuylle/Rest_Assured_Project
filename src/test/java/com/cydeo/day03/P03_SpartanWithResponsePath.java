@@ -29,16 +29,15 @@ public class P03_SpartanWithResponsePath extends SpartanTestBase {
     @DisplayName("GET spartan with Response Path")
     @Test
     public void test1(){
-        Response response = given()
-                .accept(ContentType.JSON)
-                .and()
-                .pathParam("id", 10)
-                .when().get("/api/spartans/{id}");
+
+        Response response = given().accept(ContentType.JSON)
+                .and().pathParam("id", 10)
+                .when()
+                .get("api/spartans/{id}");
 
         response.prettyPrint();
-
         //verify status code
-        assertEquals(200,response.statusCode());
+        assertEquals(200, response.statusCode());
         //verify content type
         assertEquals("application/json",response.contentType());
 
@@ -47,25 +46,24 @@ public class P03_SpartanWithResponsePath extends SpartanTestBase {
 //                name is "Lorenza",
 //                gender is "Female",
 //                phone is 3312820936
-
         int id = response.path("id");
         String name = response.path("name");
         String gender = response.path("gender");
         long phone = response.path("phone");
 
+        //if the path is incorrect it will return null
         System.out.println("id = " + id);
         System.out.println("name = " + name);
         System.out.println("gender = " + gender);
         System.out.println("phone = " + phone);
 
-        //if the path is incorrect it will return null
         String address = response.path("address");
         System.out.println("address = " + address);
 
         //Assertions
         assertEquals(10,id);
         assertEquals("Lorenza",name);
-        assertEquals("Female",gender);
+        assertEquals("Female", gender);
         assertEquals(3312820936l,phone);
 
     }
@@ -73,36 +71,37 @@ public class P03_SpartanWithResponsePath extends SpartanTestBase {
     @DisplayName("GET all Spartans")
     @Test
     public void test2(){
+
         Response response = given().accept(ContentType.JSON)
                 .when().get("/api/spartans");
-
         //response.prettyPrint();
 
         //get me first spartan ID
-        int firstId = response.path("[0].id");
-        System.out.println("firstId = " + firstId);
-        int IDFirst = response.path("id[0]");
-        System.out.println("IDFirst = " + IDFirst);
+        System.out.println("first spartan ID = " + response.path("id[0]"));
+        System.out.println("first spartan ID = " + response.path("[0].id"));
 
 
         //get first spartan name
-        System.out.println("response.path(\"[0].name\") = " + response.path("[0].name"));
-        System.out.println("response.path(\"[1].name\") = " + response.path("[1].name"));
+        System.out.println("first spartan name = " + response.path("name[0]"));
+        System.out.println("first spartan name = " + response.path("[0].name"));
 
         //get me last spartan
-        //name[-1] --> -1 refers last element of the name list
-        System.out.println("response.path(\"name[-1]\") = " + response.path("name[-1]"));
+        //name[-1] OR [-1].name --> -1 refers last element of the name list
+        System.out.println("last spartan name = "+response.path("name[-1]"));
+
 
         //get me second spartan name from the last
-        System.out.println("response.path(\"name[-2]\") = " + response.path("name[-2]"));
+        System.out.println("second spartan name from the last = " + response.path("name[-3]"));
 
         //get me all spartan names
+        System.out.println("All spartan names = "+ response.path("name"));
         List<String> allNames = response.path("name");
 
         //how to print all names
         for (String eachName : allNames) {
-            System.out.println("eachName = " + eachName);
+            System.out.println(eachName);
         }
+
     }
 
 }

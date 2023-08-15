@@ -1,0 +1,27 @@
+
+
+WHICH TESTING FRAMEWORK WE USED SO FAR?
+
+-SELENIUM: TestNG, Cucumber-Junit
+
+-DB: Junit, Cucumber-Junit
+
+-API: Junit5: -Data Driven Test with Junit5--> Doing same test against
+                                              different set of data
+              -Annotation-->@Test
+      Cucumber-Junit:
+
+-------------------------------------------
+WHICH TOOLS WE ARE USING FOR API TESTING?
+
+-POSTMAN --> Manual and Automation
+
+-REST ASSURED --> API  automation
+
+-------------------------------------------
+HOW we PERFORM API TESTING?
+
+-Read document to find which endpoint we are gonna use
+-Do manual testing with POSTMAN/SWAGGER
+-Automate test cases
+

@@ -1,9 +1,11 @@
 package com.cydeo.day03;
 
 import com.cydeo.utilities.SpartanTestBase;
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +15,7 @@ import java.util.Map;
 import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class P01_SpartanWithParameters extends SpartanTestBase {
+public class P01_SpartanWithParameters extends SpartanTestBase{
 
      /*   Given accept type is Json
         And Id parameter value is 24
@@ -22,24 +24,25 @@ public class P01_SpartanWithParameters extends SpartanTestBase {
         And response content-type: application/json
         And "Julio" should be in response payload(body)
      */
-
     @DisplayName("GET Spartan /api/spartans/{id} path param with 24")
     @Test
     public void test1() {
-        Response response = given().
-                accept(ContentType.JSON)
-                .and()
-                .pathParam("id", 24)
-                .when()
-                .get("/api/spartans/{id}");
 
-        response.prettyPrint();
         //Then response status code should be 200
-        assertEquals(200,response.statusCode());
+        Response response = given()
+                        .accept(ContentType.JSON)
+                        .and()
+                        .pathParam("id",24)
+                        .when().get("/api/spartans/{id}");
+        response.prettyPrint();
+
+        assertEquals(200, response.getStatusCode());
         //And response content-type: application/json
-        assertEquals("application/json",response.contentType());
+        assertEquals("application/json", response.getContentType());
         //And "Julio" should be in response payload(body)
-        assertTrue(response.body().asString().contains("Julio"));
+
+        boolean isJulio = response.body().asString().contains("Julio");
+        assertTrue(isJulio);
 
     }
 
@@ -52,27 +55,29 @@ public class P01_SpartanWithParameters extends SpartanTestBase {
         And response content-type: application/json
         And "Not Found" message should be in response payload
       */
-
     @DisplayName("GET Spartan /api/spartans/{id} with invalid ID")
     @Test
     public void test2() {
-        Response response = given().accept(ContentType.JSON)
-                .and() //Syntactic sugar--> to increate readability of the code, not affect anything
-                .pathParam("id", 500)
-                .when().get("/api/spartans/{id}");
+
 
         //print response
-        response.prettyPrint();
+        Response response = given().accept(ContentType.JSON)
+                .and() //Syntactic sugar--> to increase readability of the code, not affect anything
+                .pathParam("id", 500)
+                .when()
+                .get("/api/spartans/{id}");
         //Then response status code should be 404
         assertEquals(404,response.statusCode());
+
         //same with above
         assertEquals(HttpStatus.SC_NOT_FOUND,response.statusCode());
 
         // response content-type: application/json
-       assertEquals("application/json",response.getContentType());
+        assertEquals("application/json", response.contentType());
 
         // And "Not Found" message should be in response payload
         assertTrue(response.body().asString().contains("Not Found"));
+
     }
 
      /*
@@ -86,47 +91,45 @@ public class P01_SpartanWithParameters extends SpartanTestBase {
         And "Female" should be in response payload
         And "Janette" should be in response payload
      */
-
     @DisplayName("GET Request to /api/spartans/search with Query Params")
     @Test
     public void test3(){
-       Response response= given().
-                accept(ContentType.JSON)
-                .and()
-                .queryParam("gender","Female")
-                .and()
-                .queryParam("nameContains","e")
-        .when()
-                .get("/api/spartans/search");
+
        //print response
-        response.prettyPrint();
+        Response response = given().accept(ContentType.JSON)
+                .and()
+                .queryParam("gender", "Female")
+                .and()
+                .queryParam("nameContains", "e")
+                .when()
+                .get("/api/spartans/search");
 
-//        Then response status code should be 200
-        assertEquals(HttpStatus.SC_OK,response.statusCode());
-//        And response content-type: application/json
+//      Then response status code should be 200
+        assertEquals(200,response.statusCode());
+
+//      And response content-type: application/json
         assertEquals("application/json",response.contentType());
-//        And "Female" should be in response payload
+//      And "Female" should be in response payload
         assertTrue(response.body().asString().contains("Female"));
-//        And "Janette" should be in response payload
+//      And "Janette" should be in response payload
         assertTrue(response.body().asString().contains("Janette"));
-
-    //        assertTrue(response.body().asString().contains("Janette"));
+        //assertTrue(response.body().asString().contains("Janette"));
         /*
-            We are just doing exerise to verify something in Response. THi is not the proper way to verify
+            We are just doing exercise to verify something in Response. THis is not the proper way to verify
             all Spartans genders are Female, or name field is Janette, We will learn different method to get specific data.
          */
-    }
 
+
+    }
     @DisplayName("GET Request to /api/spartans/search with Query Params")
     @Test
     public void test4(){
-        Map<String,Object> queryMap = new HashMap<>();
+        Map<String, Object> queryMap = new HashMap<>();
         queryMap.put("gender","Female");
         queryMap.put("nameContains","e");
 
         //api/spartans/search?gender=Female&nameContains=e
-        Response response= given().
-                accept(ContentType.JSON)
+        Response response = given().accept(ContentType.JSON)
                 .and()
                 .queryParams(queryMap)
                 .when()
@@ -134,20 +137,16 @@ public class P01_SpartanWithParameters extends SpartanTestBase {
         //print response
         response.prettyPrint();
 
-//        Then response status code should be 200
-        assertEquals(HttpStatus.SC_OK,response.statusCode());
-//        And response content-type: application/json
+//      Then response status code should be 200
+        assertEquals(200,response.statusCode());
+
+//      And response content-type: application/json
         assertEquals("application/json",response.contentType());
-//        And "Female" should be in response payload
+//      And "Female" should be in response payload
         assertTrue(response.body().asString().contains("Female"));
-//        And "Janette" should be in response payload
+//      And "Janette" should be in response payload
         assertTrue(response.body().asString().contains("Janette"));
 
-        //        assertTrue(response.body().asString().contains("Janette"));
-        /*
-            We are just doing exerise to verify something in Response. THi is not the proper way to verify
-            all Spartans genders are Female, or name field is Janette, We will learn different method to get specific data.
-         */
     }
 
 

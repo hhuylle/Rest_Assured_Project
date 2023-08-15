@@ -30,10 +30,13 @@ public class P02_HrWithParameters extends HrTestBase {
                 .when().get("/countries");
 
         response.prettyPrint();
+
         //Then status code is 200
-        assertEquals(200,response.statusCode());
+        assertEquals(200, response.statusCode());
+
         //And Content type is application/json
         assertEquals("application/json",response.contentType());
+
         //And Payload should contain "United States of America"
         assertTrue(response.body().asString().contains("United States of America"));
 
