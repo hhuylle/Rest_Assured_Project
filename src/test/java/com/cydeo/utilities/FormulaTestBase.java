@@ -5,7 +5,7 @@ import static io.restassured.RestAssured.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
-public class FormulaTestBase {
+public abstract class FormulaTestBase {
 
     @BeforeAll
     public static void init(){
