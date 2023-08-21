@@ -1,16 +1,17 @@
 package com.cydeo.utilities;
 
+import static io.restassured.RestAssured.*;
+
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
-import static io.restassured.RestAssured.*;
-
-public abstract class SpartanTestBase {
+public abstract class FruitTestBase {
 
     @BeforeAll
     public static void init(){
-        baseURI = "http://54.165.189.254:8000";
+
+        baseURI="https://api.predic8.de/shop/v2";
     }
 
     @AfterAll
@@ -18,5 +19,4 @@ public abstract class SpartanTestBase {
         reset(); // RestAssured.reset();
         // It resets your BaseURI/BasePath etc to DEFAULT values from Rest Assured
     }
-
 }
