@@ -19,4 +19,5 @@ public class MRData {
     private StatusTable statusTable;
 
 
+
 }

@@ -20,4 +20,6 @@ public abstract class HrTestBase {
         reset(); // RestAssured.reset();
         // It resets your BaseURI/BasePath etc to DEFAULT values from Rest Assured
     }
+
+
 }
