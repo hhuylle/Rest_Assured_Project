@@ -54,13 +54,19 @@ public class Homework2 extends HrTestBase {
                 .then().statusCode(200).contentType("application/json")
                 .extract().response();
         JsonPath jp = response.jsonPath();
-        List<Object> allJobIDs = jp.getList("items.job_id");
+        List<String> allJobIDs = jp.getList("items.job_id");
         System.out.println("allJobIDs = " + allJobIDs);
+        for (String eachJobID : allJobIDs) {
+            assertTrue(eachJobID.startsWith("SA"));
+        }
 
         List<Integer> allDepartmentIDs = jp.getList("items.department_id");
-        System.out.println("allDepartmentIDs = " + allDepartmentIDs);
+        for (Integer eachDepartmentID : allDepartmentIDs) {
+            assertEquals(80,eachDepartmentID);
+        }
 
-        System.out.println("jp.get(\"count\") = " + jp.get("count"));
+        int count = jp.getInt("count");
+        assertEquals(25,count);
 
 
     }

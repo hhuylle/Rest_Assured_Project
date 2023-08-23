@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true) //this annotation will ignore the error in compile time
+@JsonIgnoreProperties(ignoreUnknown = true) //this annotation will ignore if I don't have correct response, otherwise is false will throw exception if I don't have correct response
 public class Employee {
 
     @JsonProperty("first_name")
