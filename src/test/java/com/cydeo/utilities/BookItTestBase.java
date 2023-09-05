@@ -9,5 +9,7 @@ public abstract class BookItTestBase {
     public static void init(){
 
         RestAssured.baseURI="https://api.qa.bookit.cydeo.com";
+
+
     }
 }

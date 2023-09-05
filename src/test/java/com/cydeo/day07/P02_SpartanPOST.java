@@ -58,7 +58,7 @@ public class P02_SpartanPOST extends SpartanTestBase {
                 .extract().jsonPath();
 
         //Request body verification
-       assertEquals("John Doe",jp.getString("data.name"));
+        assertEquals("John Doe",jp.getString("data.name"));
         assertEquals("Male",jp.getString("data.gender"));
         assertEquals("8877445596",jp.getString("data.phone"));
 
